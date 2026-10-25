@@ -26,10 +26,10 @@
   },
   "homepage": "https://github.com/ZencashOfficial/equihashverify",
   "dependencies": {
-    "bindings": "*",
+    "bindings": "1.5.0",
     "libsodium": "^0.7.3",
-    "nan": "*",
-    "node-gyp": "*"
+    "nan": "2.20.0",
+    "node-gyp": "10.0.0"
   },
   "engines": {
     "node": ">=0.12"
