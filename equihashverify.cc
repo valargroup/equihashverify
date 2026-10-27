@@ -4,12 +4,16 @@
 #include <v8.h>
 #include <stdint.h>
 #include "crypto/equihash.h"
+#include "crypto/equihash_avx2.h"
 
 
 #include <vector>
 using namespace v8;
 
 int verifyEH(const char *hdr, const std::vector<unsigned char> &soln, unsigned int n = 200, unsigned int k = 9){
+  if (n == 200 && k == 9)
+    return VerifyEquihash2009(reinterpret_cast<const uint8_t*>(hdr), 140,
+                              soln.data(), soln.size());
   // Hash state
   crypto_generichash_blake2b_state state;
   EhInitialiseState(n, k, state);

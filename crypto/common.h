@@ -32,9 +32,6 @@
     #define le64toh(x) OSSwapLittleToHostInt64(x)
 #endif
 
-#if defined(NDEBUG)
-# error "Zcash cannot be compiled without assertions."
-#endif
 
 uint16_t static inline ReadLE16(const unsigned char* ptr)
 {

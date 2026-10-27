@@ -17,6 +17,7 @@
 #include <functional>
 #include <memory>
 #include <set>
+#include <stdexcept>
 #include <vector>
 
 #include <boost/static_assert.hpp>
@@ -154,7 +155,7 @@ class EhSolverCancelledException : public std::exception
     }
 };
 
-inline constexpr const size_t max(const size_t A, const size_t B) { return A > B ? A : B; }
+inline constexpr size_t max(const size_t A, const size_t B) { return A > B ? A : B; }
 
 inline constexpr size_t equihash_solution_size(unsigned int N, unsigned int K) {
     return (1 << K)*(N/(K+1)+1)/8;

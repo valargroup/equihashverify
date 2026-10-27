@@ -1,0 +1,19 @@
+name: Equihash verification
+on: [push, pull_request]
+jobs:
+  native:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y libsodium-dev libboost-dev
+      - run: cmake -S . -B native-build -DCMAKE_BUILD_TYPE=Release -DEQUIHASH_REQUIRE_AVX2=ON
+      - run: cmake --build native-build -j2
+      - run: ctest --test-dir native-build --output-on-failure --verbose
+  portable:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - run: brew install libsodium boost
+      - run: cmake -S . -B native-build -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$(brew --prefix)"
+      - run: cmake --build native-build -j2
+      - run: ctest --test-dir native-build --output-on-failure
