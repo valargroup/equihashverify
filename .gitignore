@@ -2,3 +2,4 @@
 /build/
 /native-build/
 __pycache__/
+/bench-results/

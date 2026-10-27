@@ -62,7 +62,19 @@ The native tests compare the public entry point and explicit kernels against the
 legacy verifier and libsodium. `tests/reference.py --check` regenerates proof and
 hash oracles from the committed seed proofs using independent Python hashlib.
 Enable `EQUIHASH_BUILD_BENCHMARK=ON` to build `pool_bench`; compare backends on
-the same quiet host. The algorithm follows Common revision
+the same quiet host. `tests/run_benchmarks.sh` builds it, times the original
+verifier, AVX2 and AVX512 at 1 and 8 threads, and writes `bench-results/`:
+
+```sh
+tests/run_benchmarks.sh
+# Also time verify() through Node, given the original and this branch's built addons:
+NODE=/path/to/node tests/run_benchmarks.sh /path/to/old/equihashverify.node /path/to/new/equihashverify.node
+```
+
+The original verifier's cost depends on glibc's memory handling: in a Node
+process it can return its working memory to the system after every call, which
+the script shows by repeating the Node timings with raised malloc thresholds.
+The algorithm follows Common revision
 `7759b1f5f8b2597599e39610558eaafca752b4b6` and RFC 7693.
 
 This change keeps the existing Node package and toolchain requirements. Modern
